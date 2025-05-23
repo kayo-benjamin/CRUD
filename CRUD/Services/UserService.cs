@@ -16,13 +16,14 @@ namespace CRUD.Services
             using (var conn = new NpgsqlConnection(this.connectionString))
             {
                 conn.Open();
+                Hash hash = new Hash();
                 using (var cmd = new NpgsqlCommand(@"
-                    INSERT INTO users (usu_nome, usu_email, usu_senha, tipo_id, usu_cpf, usu_telefone, usu_endereco, usu_datanasc, usu_sexo, usu_status) 
+                    INSERT INTO usuarios (usu_nome, usu_email, usu_senha, tipo_id, usu_cpf, usu_telefone, usu_endereco, usu_datanasc, usu_sexo, usu_status) 
                     VALUES (@nome, @email, @senha, @tipoId, @cpf, @telefone, @endereco, @dataNascimento, @sexo, @status);", conn))
                 {
                     cmd.Parameters.AddWithValue("nome", user.Nome);
                     cmd.Parameters.AddWithValue("email", user.Email);
-                    cmd.Parameters.AddWithValue("senha", user.Senha);
+                    cmd.Parameters.AddWithValue("senha", hash.CriptografarSenha(user.Senha));
                     cmd.Parameters.AddWithValue("tipoId", user.TipoId);
                     cmd.Parameters.AddWithValue("cpf", user.CPF);
                     cmd.Parameters.AddWithValue("telefone", user.Telefone);
@@ -40,7 +41,9 @@ namespace CRUD.Services
             using (var conn = new NpgsqlConnection(this.connectionString))
             {
                 conn.Open();
-                using (var cmd = new NpgsqlCommand("SELECT usu_id, usu_nome, usu_senha, usu_email, usu_cpf, usu_telefone, usu_endereco, usu_datanasc, usu_sexo, usu_status, tipo_id FROM usuarios;", conn))
+                using (var cmd = new NpgsqlCommand("" +
+                    "SELECT usu_id, usu_nome, usu_senha, usu_email, usu_cpf, usu_telefone, usu_endereco, usu_datanasc, usu_sexo, usu_status, tipo_id " +
+                    "FROM usuarios;", conn))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
