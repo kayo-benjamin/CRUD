@@ -31,7 +31,7 @@ namespace CRUD
                 Telefone = TxtBoxTelefone.Text,
                 Endereco = TxtBoxAddress.Text,
                 Sexo = ComboBoxSex.SelectedItem?.ToString(),
-                TipoId = Convert.ToInt32(ComboBoxCargo.SelectedValue),
+                TipoId = (ComboBoxCargo.SelectedItem as dynamic)?.Id,
                 DataNascimento = DateTime.TryParse(MTextBoxDateNasc.Text, out var date) ? date : null
             };
 
