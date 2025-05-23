@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using Npgsql;
-using CRUD.Constants;
 using static CRUD.Constants.Constants;
+
 
 namespace CRUD.Helpers
 {
@@ -12,9 +12,9 @@ namespace CRUD.Helpers
         private static string connectionString = DatabaseSettings.ConnectionUrl;
 
         public static bool IsConnected { get; private set; }
-        public static string DatabaseName { get; private set; }
-        public static string PostgreSqlVersion { get; private set; }
-        public static string DatabaseSize { get; private set; }
+        public static string DatabaseName { get; private set; } = string.Empty;
+        public static string PostgreSqlVersion { get; private set; } = string.Empty;
+        public static string DatabaseSize { get; private set; } = string.Empty;
         public static int ActiveConnections { get; private set; }
 
         public static bool TestConnection()
