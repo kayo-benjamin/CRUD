@@ -33,10 +33,12 @@
             button2 = new Button();
             btnLoadUsers = new Button();
             button4 = new Button();
-            btnVerifyConnection = new Button();
             listView1 = new ListView();
             columnName = new ColumnHeader();
             columnEmail = new ColumnHeader();
+            columnSex = new ColumnHeader();
+            columnCPF = new ColumnHeader();
+            columnEndereco = new ColumnHeader();
             tableLayoutPanel1 = new TableLayoutPanel();
             labelConnection = new Label();
             menuStrip1 = new MenuStrip();
@@ -44,6 +46,10 @@
             bancoDeDadosToolStripMenuItem = new ToolStripMenuItem();
             tabelasToolStripMenuItem = new ToolStripMenuItem();
             propriedadesToolStripMenuItem = new ToolStripMenuItem();
+            testarConexãoToolStripMenuItem = new ToolStripMenuItem();
+            tipoToolStripMenuItem = new ToolStripMenuItem();
+            adicionarTipoToolStripMenuItem = new ToolStripMenuItem();
+            listarTiposToolStripMenuItem = new ToolStripMenuItem();
             flowLayoutPanel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -55,7 +61,6 @@
             flowLayoutPanel1.Controls.Add(button2);
             flowLayoutPanel1.Controls.Add(btnLoadUsers);
             flowLayoutPanel1.Controls.Add(button4);
-            flowLayoutPanel1.Controls.Add(btnVerifyConnection);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(1, 105);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -71,7 +76,7 @@
             btnCreateUser.TabIndex = 1;
             btnCreateUser.Text = "&Criar";
             btnCreateUser.UseVisualStyleBackColor = true;
-            btnCreateUser.Click += btnCreateUser_Click;
+            btnCreateUser.Click += BtnCreateUser_Click;
             // 
             // button2
             // 
@@ -90,7 +95,7 @@
             btnLoadUsers.TabIndex = 3;
             btnLoadUsers.Text = "&Ler";
             btnLoadUsers.UseVisualStyleBackColor = true;
-            btnLoadUsers.Click += btnLoadUsers_Click;
+            btnLoadUsers.Click += BtnLoadUsers_Click;
             // 
             // button4
             // 
@@ -101,19 +106,9 @@
             button4.Text = "&Deletar";
             button4.UseVisualStyleBackColor = true;
             // 
-            // btnVerifyConnection
-            // 
-            btnVerifyConnection.Location = new Point(3, 199);
-            btnVerifyConnection.Name = "btnVerifyConnection";
-            btnVerifyConnection.Size = new Size(326, 122);
-            btnVerifyConnection.TabIndex = 5;
-            btnVerifyConnection.Text = "&Verificar Conexão";
-            btnVerifyConnection.UseVisualStyleBackColor = true;
-            btnVerifyConnection.Click += btnVerifyConnection_Click;
-            // 
             // listView1
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { columnName, columnEmail });
+            listView1.Columns.AddRange(new ColumnHeader[] { columnName, columnEmail, columnSex, columnCPF, columnEndereco });
             listView1.GridLines = true;
             listView1.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listView1.Location = new Point(3, 3);
@@ -134,6 +129,23 @@
             columnEmail.TextAlign = HorizontalAlignment.Center;
             columnEmail.Width = 200;
             // 
+            // columnSex
+            // 
+            columnSex.Text = "Sex";
+            columnSex.TextAlign = HorizontalAlignment.Center;
+            // 
+            // columnCPF
+            // 
+            columnCPF.Text = "CPF";
+            columnCPF.TextAlign = HorizontalAlignment.Center;
+            columnCPF.Width = 80;
+            // 
+            // columnEndereco
+            // 
+            columnEndereco.Text = "Endereco";
+            columnEndereco.TextAlign = HorizontalAlignment.Center;
+            columnEndereco.Width = 409;
+            // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
@@ -152,7 +164,7 @@
             labelConnection.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelConnection.Location = new Point(1046, 78);
             labelConnection.Name = "labelConnection";
-            labelConnection.Size = new Size(33, 24);
+            labelConnection.Size = new Size(0, 24);
             labelConnection.TabIndex = 1;
             labelConnection.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -168,29 +180,58 @@
             // 
             // settingsToolStripMenuItem
             // 
-            settingsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { bancoDeDadosToolStripMenuItem });
+            settingsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { bancoDeDadosToolStripMenuItem, tipoToolStripMenuItem });
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             settingsToolStripMenuItem.Size = new Size(76, 24);
             settingsToolStripMenuItem.Text = "&Settings";
             // 
             // bancoDeDadosToolStripMenuItem
             // 
-            bancoDeDadosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tabelasToolStripMenuItem, propriedadesToolStripMenuItem });
+            bancoDeDadosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tabelasToolStripMenuItem, propriedadesToolStripMenuItem, testarConexãoToolStripMenuItem });
             bancoDeDadosToolStripMenuItem.Name = "bancoDeDadosToolStripMenuItem";
-            bancoDeDadosToolStripMenuItem.Size = new Size(201, 26);
+            bancoDeDadosToolStripMenuItem.Size = new Size(224, 26);
             bancoDeDadosToolStripMenuItem.Text = "Banco de Dados";
             // 
             // tabelasToolStripMenuItem
             // 
             tabelasToolStripMenuItem.Name = "tabelasToolStripMenuItem";
-            tabelasToolStripMenuItem.Size = new Size(180, 26);
+            tabelasToolStripMenuItem.Size = new Size(193, 26);
             tabelasToolStripMenuItem.Text = "Tabelas";
             // 
             // propriedadesToolStripMenuItem
             // 
             propriedadesToolStripMenuItem.Name = "propriedadesToolStripMenuItem";
-            propriedadesToolStripMenuItem.Size = new Size(180, 26);
+            propriedadesToolStripMenuItem.Size = new Size(193, 26);
             propriedadesToolStripMenuItem.Text = "Propriedades";
+            propriedadesToolStripMenuItem.Click += PropriedadesToolStripMenuItem_Click;
+            // 
+            // testarConexãoToolStripMenuItem
+            // 
+            testarConexãoToolStripMenuItem.Name = "testarConexãoToolStripMenuItem";
+            testarConexãoToolStripMenuItem.Size = new Size(193, 26);
+            testarConexãoToolStripMenuItem.Text = "Testar Conexão";
+            testarConexãoToolStripMenuItem.Click += TestarConexãoToolStripMenuItem_Click;
+            // 
+            // tipoToolStripMenuItem
+            // 
+            tipoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { adicionarTipoToolStripMenuItem, listarTiposToolStripMenuItem });
+            tipoToolStripMenuItem.Name = "tipoToolStripMenuItem";
+            tipoToolStripMenuItem.Size = new Size(224, 26);
+            tipoToolStripMenuItem.Text = "&Tipo";
+            // 
+            // adicionarTipoToolStripMenuItem
+            // 
+            adicionarTipoToolStripMenuItem.Name = "adicionarTipoToolStripMenuItem";
+            adicionarTipoToolStripMenuItem.Size = new Size(224, 26);
+            adicionarTipoToolStripMenuItem.Text = "Adicionar Tipo";
+            adicionarTipoToolStripMenuItem.Click += AdicionarTipoToolStripMenuItem_Click;
+            // 
+            // listarTiposToolStripMenuItem
+            // 
+            listarTiposToolStripMenuItem.Name = "listarTiposToolStripMenuItem";
+            listarTiposToolStripMenuItem.Size = new Size(224, 26);
+            listarTiposToolStripMenuItem.Text = "Listar Tipos";
+            listarTiposToolStripMenuItem.Click += ListarTiposToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -220,7 +261,6 @@
         private Button button2;
         private Button btnLoadUsers;
         private Button button4;
-        private Button btnVerifyConnection;
         private ListView listView1;
         private ColumnHeader columnName;
         private ColumnHeader columnEmail;
@@ -231,5 +271,12 @@
         private ToolStripMenuItem bancoDeDadosToolStripMenuItem;
         private ToolStripMenuItem tabelasToolStripMenuItem;
         private ToolStripMenuItem propriedadesToolStripMenuItem;
+        private ColumnHeader columnSex;
+        private ColumnHeader columnCPF;
+        private ToolStripMenuItem testarConexãoToolStripMenuItem;
+        private ColumnHeader columnEndereco;
+        private ToolStripMenuItem tipoToolStripMenuItem;
+        private ToolStripMenuItem adicionarTipoToolStripMenuItem;
+        private ToolStripMenuItem listarTiposToolStripMenuItem;
     }
 }

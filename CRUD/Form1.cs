@@ -1,3 +1,4 @@
+using CRUD.Forms;
 using CRUD.Helpers;
 using CRUD.Services;
 
@@ -8,7 +9,6 @@ namespace CRUD
         public Form1()
         {
             InitializeComponent();
-            AtualizarStatusConexao();
         }
         private void AtualizarStatusConexao()
         {
@@ -26,12 +26,7 @@ namespace CRUD
             }
         }
 
-        private void btnVerifyConnection_Click(object sender, EventArgs e)
-        {
-            AtualizarStatusConexao();
-        }
-
-        private void btnLoadUsers_Click(object sender, EventArgs e)
+        private void BtnLoadUsers_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
@@ -46,6 +41,9 @@ namespace CRUD
                 {
                     var listItem = new ListViewItem(user.Nome);
                     listItem.SubItems.Add(user.Email);
+                    listItem.SubItems.Add(user.Sexo);
+                    listItem.SubItems.Add(user.CPF);
+                    listItem.SubItems.Add(user.Endereco);
                     listView1.Items.Add(listItem);
                 }
 
@@ -61,10 +59,51 @@ namespace CRUD
             }
         }
 
-        private void btnCreateUser_Click(object sender, EventArgs e)
+        private void BtnCreateUser_Click(object sender, EventArgs e)
         {
             FormCadUsuario form2 = new FormCadUsuario();
             form2.ShowDialog();
+        }
+
+        private void TestarConexãoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AtualizarStatusConexao();
+        }
+
+        private void PropriedadesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var loadingForm = new FormLoading();
+            loadingForm.StartPosition = FormStartPosition.CenterScreen;
+            loadingForm.Show();
+
+            for (int i = 0; i <= 100; i += 10)
+            {
+
+                loadingForm.UpdateProgress(i);
+
+                AtualizarStatusConexao();
+
+                if (DatabaseHelper.IsConnected)
+                {
+                    loadingForm.Close();
+                }
+            }
+
+            // Exibe a janela de configurações
+            DatabaseConfig databaseHelp = new DatabaseConfig();
+            databaseHelp.ShowDialog();
+        }
+
+        private void AdicionarTipoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CadastroCargo cadCargo = new CadastroCargo();
+            cadCargo.ShowDialog();
+        }
+
+        private void ListarTiposToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListCargo listCargo = new ListCargo();
+            listCargo.ShowDialog();
         }
     }
 }

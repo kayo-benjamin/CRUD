@@ -12,9 +12,15 @@ namespace CRUD.Helpers
         private static string connectionString = DatabaseSettings.ConnectionUrl;
 
         public static bool IsConnected { get; private set; }
+<<<<<<< HEAD
         public static string DatabaseName { get; private set; } = string.Empty;
         public static string PostgreSqlVersion { get; private set; } = string.Empty;
         public static string DatabaseSize { get; private set; } = string.Empty;
+=======
+        public static string? DatabaseName { get; private set; }
+        public static string? PostgreSqlVersion { get; private set; }
+        public static string? DatabaseSize { get; private set; }
+>>>>>>> 748769813b9f035dddf159b42612a631cd5e0cbf
         public static int ActiveConnections { get; private set; }
 
         public static bool TestConnection()
